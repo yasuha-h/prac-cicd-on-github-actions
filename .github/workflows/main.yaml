@@ -15,11 +15,13 @@ jobs:
         uses: actions/checkout@v4
       # AWS認証
       - name: Configure AWS Credentials
+        env:
+          AWS_ACCOUNT_ID: ${{ secrets.PRAC_AWS_ACCOUNT_ID }}
         uses: aws-actions/configure-aws-credentials@v4
         with:
           audience: sts.amazonaws.com
           aws-region: ap-northeast-1
-          role-to-assume: arn:aws:iam::${{ secrets.PRAC_AWS_ACOUNT_ID }}:role/prac-github-actions-role
+          role-to-assume: arn:aws:iam::${{ env.AWS_ACCOUNT_ID }}:role/prac-github-actions-role
       # ECRへログイン
       - name: Login to Amazon private ECR
         id: login-private-ecr
